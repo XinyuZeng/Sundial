@@ -8,7 +8,7 @@ public:
 	Message * handleRequest(char * buffer) {
 	    // Parse in message
         Message * msg = new Message(buffer);
-        printf("receive data: txn-%llu %s\n", msg->get_txn_id(),msg->get_data());
+        printf("receive data: txn-%lu %s\n", msg->get_txn_id(),msg->get_data());
         flushLog(msg);
         // Prepare out message
         msg->set_type(Message::ACK);

@@ -7,14 +7,18 @@
 
 #include <typeinfo>
 #include <mm_malloc.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <assert.h>
 
 //////////////////////////////////////////////////
 // type helper
 //////////////////////////////////////////////////
-typedef uint32_t UInt32;
-typedef int32_t SInt32;
-typedef uint64_t UInt64;
-typedef int64_t SInt64;
+//typedef uint32_t UInt32;
+//typedef int32_t SInt32;
+//typedef uint64_t UInt64;
+//typedef int64_t SInt64;
 
 //////////////////////////////////////////////////
 // Malloc helper

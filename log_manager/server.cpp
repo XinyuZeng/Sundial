@@ -33,22 +33,30 @@ int main(){
     // create socket
     printf("creating socket ...");
     int server_socket = socket(AF_INET, SOCK_STREAM, 0); // AF_INET; 0 [ or IPPROTO_IP This is IP protocol]
+    if (server_socket == -1) {
+        perror("init socket");
+        exit(1);
+    }
     printf("[done]\n");
 
     // server addr
     struct sockaddr_in serv_addr;
     memset(&serv_addr, 0, sizeof(serv_addr));  // fill bytes with zeros
+    int opt = 1;
+    if (setsockopt(server_socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, 
+                                    &opt, sizeof(opt))) { 
+        perror("setsockopt"); 
+        exit(EXIT_FAILURE); 
+    }
     serv_addr.sin_family = AF_INET;  // use IPv4
-    serv_addr.sin_addr.s_addr = inet_addr(IP); //INADDR_ANY; //inet_addr(IP);  // IP addr
+    serv_addr.sin_addr.s_addr = INADDR_ANY; //inet_addr(IP);  // IP addr
     serv_addr.sin_port = htons(PORT);  // port
 
     // bind socket
     printf("binding socket ...");
     
     int status = bind(server_socket, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
-    if (status > 0)
-        printf("[done]\n");
-    else
+    if (status < 0)
         printf("[error]\n");
 
     // listening

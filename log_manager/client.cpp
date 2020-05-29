@@ -42,7 +42,7 @@ int main()
     struct sockaddr_in server;
     server.sin_family = AF_INET;
     server.sin_port = htons(PORT);
-    server.sin_addr.s_addr = inet_addr(IP);
+    server.sin_addr.s_addr = INADDR_ANY;//inet_addr(IP);
     
     if(connect(socketServer, (struct sockaddr*)&server, sizeof(struct sockaddr_in)) < 0 )
     {
