@@ -14,8 +14,9 @@ class Message
 {
 public:
 	enum Type {
-		PREPARED, // used to check vote & log vote
-		COMMITTED, // used to check commit status & log commit
+		VOTE_REQ, // used to check vote & log vote
+		COMMIT_REQ, // used to check commit status & log commit
+		ABORT_REQ, // used to abort
 		ACK
 	};
 	enum Status {

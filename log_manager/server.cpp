@@ -28,7 +28,24 @@ int sendMessage(int fd, Message * msg) {
 
 int main(){
     // create log manager
-    LogManager manager = LogManager();
+    char log_name[100];
+    sprintf(log_name, "test_log");
+    LogManager manager = LogManager(log_name);
+
+    // LogRecord log{1, 1, 1, LogRecordType::COMMIT};
+    // manager.flushlog(log);
+    // log.set_latest_lsn(5);
+    // manager.flushlog(log);
+    // FILE * f = fopen(log_name, "r");
+    // LogRecord result;
+    // printf("%d %d %d %d\n", result.get_node_id(), result.get_txn_id(), 
+    //     result.get_latest_lsn(), result.get_log_record_type());
+    // fread((char *)&result, sizeof(result), 1, f);
+    // printf("%d %d %d %d\n", result.get_node_id(), result.get_txn_id(), 
+    //     result.get_latest_lsn(), result.get_log_record_type());
+    // fread((char *)&result, sizeof(result), 1, f);
+    // printf("%d %d %d %d\n", result.get_node_id(), result.get_txn_id(), 
+    //     result.get_latest_lsn(), result.get_log_record_type());
 
     // create socket
     printf("creating socket ...");

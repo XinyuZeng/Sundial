@@ -73,10 +73,10 @@ string
 Message::get_name(Type type)
 {
 	switch(type) {
-        case PREPARED:
-            return "PREPARED";
-        case COMMITTED:
-            return "COMMITTED";
+        case VOTE_REQ:
+            return "VOTE_REQ";
+        case COMMIT_REQ:
+            return "COMMIT_REQ";
 	    case ACK:
 	        return "ACK";
 		default:
@@ -87,7 +87,7 @@ Message::get_name(Type type)
 bool
 Message::is_response(Type type)
 {
-	return (type == PREPARED)
-		   || (type == COMMITTED)
+	return (type == VOTE_REQ)
+		   || (type == COMMIT_REQ)
 		   || (type == ACK);
 }
