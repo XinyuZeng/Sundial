@@ -17,7 +17,10 @@ public:
 		VOTE_REQ, // used to check vote & log vote
 		COMMIT_REQ, // used to check commit status & log commit
 		ABORT_REQ, // used to abort
-		ACK
+		ACK,
+		VOTED_YES,
+		ABORTTED,
+		COMMITTED
 	};
 	enum Status {
 	    PREPARED_COMMIT,
@@ -27,6 +30,7 @@ public:
 	Message(Type type, uint32_t dest, uint64_t txn_id, int size, char * data);
     Message(Type type, uint32_t dest, uint64_t txn_id, int size, char * data,
             Status stat, uint64_t lsn);
+	Message(Type type, uint32_t dest, uint64_t txn_id, uint64_t lsn);
 	Message(Message * msg);
 	Message(char * packet);
 	~Message();

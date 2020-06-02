@@ -32,20 +32,8 @@ int main(){
     sprintf(log_name, "test_log");
     LogManager manager = LogManager(log_name);
 
-    // LogRecord log{1, 1, 1, LogRecordType::COMMIT};
-    // manager.flushlog(log);
-    // log.set_latest_lsn(5);
-    // manager.flushlog(log);
-    // FILE * f = fopen(log_name, "r");
-    // LogRecord result;
-    // printf("%d %d %d %d\n", result.get_node_id(), result.get_txn_id(), 
-    //     result.get_latest_lsn(), result.get_log_record_type());
-    // fread((char *)&result, sizeof(result), 1, f);
-    // printf("%d %d %d %d\n", result.get_node_id(), result.get_txn_id(), 
-    //     result.get_latest_lsn(), result.get_log_record_type());
-    // fread((char *)&result, sizeof(result), 1, f);
-    // printf("%d %d %d %d\n", result.get_node_id(), result.get_txn_id(), 
-    //     result.get_latest_lsn(), result.get_log_record_type());
+    LogRecord log{1, 2, 3, LogRecord::Type::YES};
+    manager.append_log(log);
 
     // create socket
     printf("creating socket ...");
@@ -104,5 +92,19 @@ int main(){
     }
     // close socket
     close(server_socket);
+
+    
+    FILE * fp = fopen("test_log", "r");
+    LogRecord result;
+    printf("%d %d %d %d\n", result.get_node_id(), result.get_txn_id(), 
+        result.get_latest_lsn(), result.get_log_record_type());
+    if (fread((char *)&result, sizeof(LogRecord), 1, fp) != 0) {
+        printf("%d %d %d %d\n", result.get_node_id(), result.get_txn_id(), 
+            result.get_latest_lsn(), result.get_log_record_type());
+    }
+    if (fread((char *)&result, sizeof(LogRecord), 1, fp) != 0) {
+        printf("%d %d %d %d\n", result.get_node_id(), result.get_txn_id(), 
+            result.get_latest_lsn(), result.get_log_record_type());
+    }
     return 0;
 }

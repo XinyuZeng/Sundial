@@ -7,7 +7,7 @@ class LogRecord
 
 public:
     
-    enum LogRecordType {
+    enum Type {
         INVALID,
         BEGIN,
         COMMIT,
@@ -19,17 +19,17 @@ public:
     _log_record_type(INVALID) {};
 
     LogRecord(uint32_t _node_id, uint64_t _txn_id, uint64_t _latest_lsn,
-    LogRecordType _log_record_type)
+    Type _log_record_type)
     : _node_id(_node_id), _txn_id(_txn_id), _latest_lsn(_latest_lsn),
     _log_record_type(_log_record_type) {};
 
     ~LogRecord();
 
     
-    LogRecordType get_log_record_type() {
+    Type get_log_record_type() {
         return this->_log_record_type;
     }
-    void set_log_record_type(LogRecordType _log_record_type) {
+    void set_log_record_type(Type _log_record_type) {
         this->_log_record_type = _log_record_type;
     }
 
@@ -80,7 +80,7 @@ private:
     uint32_t _node_id;
     uint64_t _txn_id;
     uint64_t _latest_lsn;
-    LogRecordType _log_record_type = INVALID;
+    Type _log_record_type = INVALID;
     
 };
 

@@ -55,7 +55,7 @@ int main()
     // send msg
     char data[1024-sizeof(Message)];
     sprintf(data, "YES");
-    Message * m = new Message(Message::VOTE_REQ, 0, 1, strlen(data)+1, data);
+    Message * m = new Message(Message::VOTE_REQ, 1, 2, 1);
     int nRes = sendMessage(socketServer, m);
 
 	// receive msg

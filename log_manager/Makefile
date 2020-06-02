@@ -9,4 +9,4 @@ server: message.o server.o
 client: message.o client.o 
 	$(CXX) $^ $(CFLAGS) -o $@
 clean:
-	rm server client *.o
+	rm server client *.o test_log

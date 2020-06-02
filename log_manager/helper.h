@@ -30,5 +30,6 @@
 
 #define FREE(block, size) free(block)
 #define DELETE(type, block) { delete block; }
-
+#define ATOM_FETCH_ADD(dest, value) \
+    __sync_fetch_and_add(&(dest), value)
 #endif //SUNDIAL_HELPER_H

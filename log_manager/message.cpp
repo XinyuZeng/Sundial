@@ -31,6 +31,15 @@ Message::Message(Type type, uint32_t dest, uint64_t txn_id, int size,
     //_src_node_id = g_node_id;
 }
 
+Message::Message(Type type, uint32_t dest, uint64_t txn_id, uint64_t lsn)
+        : _msg_type(type)
+        , _txn_id(txn_id)
+        , _latest_lsn(lsn)
+{
+    
+    //_src_node_id = g_node_id;
+}
+
 Message::Message(Message * msg)
 {
 	memcpy(this, msg, sizeof(Message));
