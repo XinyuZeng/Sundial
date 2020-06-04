@@ -41,23 +41,30 @@ public:
 		Message::Status txn_status = check_txn_status();
 		if (msg->get_type() == Message::Type::VOTE_REQ) {
 			// check whether already vote
-			vote = check_vote(msg);
+			vote = check_log(msg);
 			if (vote == LogRecord::INVALID) {
 				if (txn_status == Message::Status::PREPARED_COMMIT) {
 					// vote yes
+					vote == LogRecord::YES;
 					log_message(msg, LogRecord::Type::YES);
 				} else {
-					// vote no?
+					// vote no
+					vote == LogRecord::ABORT;
 					log_message(msg, LogRecord::Type::ABORT);
 				}
 			}
 		} else if (msg->get_type() == Message::Type::COMMIT_REQ) {
 			// commit 
-			assert(check_vote(msg) == LogRecord::YES);
+			assert(check_log(msg) == LogRecord::YES);
+			vote = LogRecord::Type::COMMIT;
 			log_message(msg, LogRecord::Type::COMMIT);
 		} else if (msg->get_type() == Message::Type::ABORT_REQ) {
 			// abort
-			log_message(msg, LogRecord::Type::ABORT);
+			vote = check_log(msg);
+			if (vote != LogRecord::ABORT) {
+				vote = LogRecord::ABORT;
+				log_message(msg, LogRecord::Type::ABORT);
+			}
 		} else {
 			assert(false);
 		}
@@ -102,7 +109,7 @@ private:
 		append_log(log);
 	};
 
-	LogRecord::Type check_vote(Message * msg) {
+	LogRecord::Type check_log(Message * msg) {
 		LogRecord::Type vote = LogRecord::INVALID;
 		FILE * fp = fopen(log_name, "r");
 		fseek(fp, 0, SEEK_END);
