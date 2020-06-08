@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "fstream": "cpp",
+        "iomanip": "cpp",
+        "ios": "cpp",
+        "memory": "cpp",
+        "ostream": "cpp",
+        "sstream": "cpp",
+        "streambuf": "cpp",
+        "xlocale": "cpp",
+        "xutility": "cpp",
+        "cmath": "cpp"
+    }
+}
