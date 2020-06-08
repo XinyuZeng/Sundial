@@ -8,6 +8,27 @@ LogManager::LogManager()
     _lsn = 0;
 }
 
+LogManager::LogManager(char * log_name)
+{
+    _buffer_size = 64 * 1024 * 1024;
+    _buffer = new char[_buffer_size]; // 64 MB
+    _lsn = 0;
+    _name_size = 50;
+    _log_name = new char[_name_size];
+    strcpy(_log_name, log_name);
+    log_fd = open(log_name, O_RDWR | O_CREAT | O_TRUNC | O_DIRECT | O_APPEND);
+    if (log_fd == 0) {
+        perror("open log file");
+        exit(1);
+    }
+}
+
+~LogManager() {
+		delete[] _log_name;
+		_log_name = nullptr;
+		close(log_fd);
+}
+
 void
 LogManager::log(uint32_t size, char * record)
 {
@@ -22,4 +43,12 @@ LogManager::log(uint32_t size, char * record)
     }
     INC_FLOAT_STATS(log_size, size);
     // TODO should write buffer to disk. For now, assume NVP or battery backed DRAM.
+    if (write(log_fd, record, size) == -1) {
+			perror("write");
+			exit(1);
+    }
+    if (fsync(log_fd) == -1) {
+        perror("fsync");
+        exit(1);
+    }
 }
