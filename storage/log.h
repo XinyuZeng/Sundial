@@ -5,6 +5,7 @@
 class LogManager {
 public:
     LogManager();
+    ~LogManager();
     LogManager(char *log_name);
     void log(uint32_t size, char * record);
 private:

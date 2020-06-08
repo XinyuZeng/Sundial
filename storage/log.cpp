@@ -1,5 +1,8 @@
 #include "log.h"
 #include "manager.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 LogManager::LogManager()
 {
@@ -16,14 +19,15 @@ LogManager::LogManager(char * log_name)
     _name_size = 50;
     _log_name = new char[_name_size];
     strcpy(_log_name, log_name);
-    _log_fd = open(log_name, O_RDWR | O_CREAT | O_TRUNC | O_DIRECT | O_APPEND);
+    //TODO: delete O_TRUNC when recovery is needed.
+    _log_fd = open(log_name, O_RDWR | O_CREAT | O_TRUNC | O_DIRECT | O_APPEND, 0755);
     if (_log_fd == 0) {
         perror("open log file");
         exit(1);
     }
 }
 
-~LogManager() {
+LogManager::~LogManager() {
 		delete[] _log_name;
 		_log_name = nullptr;
 		close(_log_fd);
