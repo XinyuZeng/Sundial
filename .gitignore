@@ -1,2 +1,10 @@
-*.d
-*.o
+**.o
+**.d
+**.out
+**.swp
+**.swo
+**.pyc
+config.h
+rundb
+__pycache__
+.vscode
